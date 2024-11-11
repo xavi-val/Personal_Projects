@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: production
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: unless-stopped
+
+  cronicle:
+    image: pentaho/biserver:latest
+    ports:
+      - "3012:3012"
+    volumes:
+      - cronicle_data:/opt/cronicle
+    depends_on:
+      - mariadb
+    environment:
+      CRONICLE_base_app_url: "http://localhost:3012"
+      CRONICLE_WebServer__http_port: 3012
+      CRONICLE_echo: 1
+    restart: unless-stopped
+
+volumes:
+  mariadb_data:
+  cronicle_data:

@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  ZoomCamp-DB:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: punto_de_venta
+      MYSQL_USER: javier
+      MYSQL_PASSWORD: root
+    volumes:
+      - BD_MARIADB:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  ZoomCamp-MageAI:
+    image: mageai/mageai:latest
+    volumes:
+      - BD_MARIADB:/var/lib/mageai/data
+    ports:
+      - "6789:6789"
+      - "7789:7789"
+
+volumes:
+  BD_MARIADB:
