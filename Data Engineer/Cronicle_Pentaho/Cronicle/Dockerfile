@@ -23,6 +23,9 @@ COPY Pentaho/data-integration /opt/pentaho/data-integration
 # Dar permisos de ejecución a los scripts de Pentaho
 RUN chmod +x /opt/pentaho/data-integration/*.sh
 
+# Crear directorio para guardar Jobs
+RUN mkdir /opt/pentaho/jobs
+
 # Establecer variables de entorno para Pentaho
 ENV PENTAHO_HOME=/opt/pentaho/data-integration
 ENV PATH=$PATH:$PENTAHO_HOME
